@@ -1,0 +1,16 @@
+[Unit]
+Description=temperature-tracer.service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/sxy/temperature_tracer/systemd/start-server.sh
+ExecStop=/home/sxy/temperature_tracer/systemd/kill-server.sh
+Restart=always
+RestartSec=5
+TimeoutSec=60
+RuntimeMaxSec=infinity
+PIDFile=/tmp/temperature_tracer.pid
+
+[Install]
+WantedBy=multi-user.target
