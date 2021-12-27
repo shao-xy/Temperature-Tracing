@@ -41,9 +41,11 @@ class ReadWriteLock:
         """ Release a write lock. """
         self._read_ready.release()
 
+def instant_temperature_status():
+	return subprocess.run(os.path.join(Path(__file__).parent.parent.absolute(), 'instant-get.sh'), capture_output=True, text=True).stdout
+
 MAX_TEMPERATURE_STATUS_KEPTED = 25
 def update_temperature_status(lines):
-	status = subprocess.run(os.path.join(Path(__file__).parent.parent.absolute(), 'instant-get.sh'), capture_output=True, text=True).stdout
-	lines.insert(0, status)
+	lines.insert(0, instant_temperature_status())
 	if len(lines) > MAX_TEMPERATURE_STATUS_KEPTED:
 		del lines[MAX_TEMPERATURE_STATUS_KEPTED:]
